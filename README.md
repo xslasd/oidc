@@ -1,10 +1,10 @@
 # OpenID Connect SDK (client and server) for Go
 
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
-[![Release](https://github.com/caos/oidc/workflows/Release/badge.svg)](https://github.com/caos/oidc/actions)
-[![license](https://badgen.net/github/license/caos/oidc/)](https://github.com/caos/oidc/blob/master/LICENSE)
-[![release](https://badgen.net/github/release/caos/oidc/stable)](https://github.com/caos/oidc/releases)
-[![Go Report Card](https://goreportcard.com/badge/github.com/caos/oidc)](https://goreportcard.com/report/github.com/caos/oidc)
+[![Release](https://github.com/xslasd/oidc/workflows/Release/badge.svg)](https://github.com/xslasd/oidc/actions)
+[![license](https://badgen.net/github/license/caos/oidc/)](https://github.com/xslasd/oidc/blob/master/LICENSE)
+[![release](https://badgen.net/github/release/caos/oidc/stable)](https://github.com/xslasd/oidc/releases)
+[![Go Report Card](https://goreportcard.com/badge/github.com/xslasd/oidc)](https://goreportcard.com/report/github.com/xslasd/oidc)
 [![codecov](https://codecov.io/gh/caos/oidc/branch/master/graph/badge.svg)](https://codecov.io/gh/caos/oidc)
 
 ![openid_certified](https://cloud.githubusercontent.com/assets/1454075/7611268/4d19de32-f97b-11e4-895b-31b2455a7ca6.png)
@@ -24,9 +24,9 @@ Check the `/example` folder where example code for different scenarios is locate
 ```bash
 # start oidc op server
 # oidc discovery http://localhost:9998/.well-known/openid-configuration
-CAOS_OIDC_DEV=1 go run github.com/caos/oidc/example/server/default
+CAOS_OIDC_DEV=1 go run github.com/xslasd/oidc/example/server/default
 # start oidc web client
-CLIENT_ID=web CLIENT_SECRET=web ISSUER=http://localhost:9998/ SCOPES=openid PORT=5556 go run github.com/caos/oidc/example/client/app
+CLIENT_ID=web CLIENT_SECRET=web ISSUER=http://localhost:9998/ SCOPES=openid PORT=5556 go run github.com/xslasd/oidc/example/client/app
 ```
 
 - browser http://localhost:5556/login will redirect to op server
@@ -87,4 +87,4 @@ See the exact licensing terms [here](./LICENSE)
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
 
-[^1]: https://github.com/caos/oidc/issues/135#issuecomment-950563892
+[^1]: https://github.com/xslasd/oidc/issues/135#issuecomment-950563892

@@ -4,8 +4,8 @@ import (
 	"context"
 	"net/http"
 
-	httphelper "github.com/caos/oidc/pkg/http"
-	"github.com/caos/oidc/pkg/oidc"
+	httphelper "github.com/xslasd/oidc/pkg/http"
+	"github.com/xslasd/oidc/pkg/oidc"
 )
 
 type SessionEnder interface {

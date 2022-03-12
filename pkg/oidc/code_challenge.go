@@ -3,7 +3,7 @@ package oidc
 import (
 	"crypto/sha256"
 
-	"github.com/caos/oidc/pkg/crypto"
+	"github.com/xslasd/oidc/pkg/crypto"
 )
 
 const (

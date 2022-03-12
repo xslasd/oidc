@@ -4,9 +4,9 @@ import (
 	"context"
 	"time"
 
-	"github.com/caos/oidc/pkg/crypto"
-	"github.com/caos/oidc/pkg/oidc"
-	"github.com/caos/oidc/pkg/strings"
+	"github.com/xslasd/oidc/pkg/crypto"
+	"github.com/xslasd/oidc/pkg/oidc"
+	"github.com/xslasd/oidc/pkg/strings"
 )
 
 type TokenCreator interface {

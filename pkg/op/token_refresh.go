@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"time"
 
-	httphelper "github.com/caos/oidc/pkg/http"
-	"github.com/caos/oidc/pkg/oidc"
-	"github.com/caos/oidc/pkg/strings"
+	httphelper "github.com/xslasd/oidc/pkg/http"
+	"github.com/xslasd/oidc/pkg/oidc"
+	"github.com/xslasd/oidc/pkg/strings"
 )
 
 type RefreshTokenRequest interface {

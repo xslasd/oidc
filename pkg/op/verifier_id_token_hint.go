@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/caos/oidc/pkg/oidc"
+	"github.com/xslasd/oidc/pkg/oidc"
 )
 
 type IDTokenHintVerifier interface {
