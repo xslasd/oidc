@@ -2,6 +2,7 @@ package op
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	httphelper "github.com/xslasd/oidc/pkg/http"
@@ -63,9 +64,11 @@ func ValidateEndSessionRequest(ctx context.Context, req *oidc.EndSessionRequest,
 		return session, nil
 	}
 	claims, err := VerifyIDTokenHint(ctx, req.IdTokenHint, ender.IDTokenHintVerifier())
+	fmt.Println("claims",claims)
 	if err != nil {
 		return nil, oidc.ErrInvalidRequest().WithDescription("id_token_hint invalid").WithParent(err)
 	}
+
 	session.UserID = claims.GetSubject()
 	session.Client, err = ender.Storage().GetClientByClientID(ctx, claims.GetAuthorizedParty())
 	if err != nil {
