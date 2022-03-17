@@ -2,6 +2,7 @@ package rp
 
 import (
 	"context"
+	"encoding/json"
 	"time"
 
 	"gopkg.in/square/go-jose.v2"
@@ -36,13 +37,16 @@ func VerifyTokens(ctx context.Context, accessToken, idTokenString string, v IDTo
 //https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation
 func VerifyIDToken(ctx context.Context, token string, v IDTokenVerifier) (oidc.IDTokenClaims, error) {
 	claims := oidc.EmptyIDTokenClaims()
-
-	decrypted, err := oidc.DecryptToken(token)
+	decrypted, err :=jose.ParseSigned(token)
 	if err != nil {
 		return nil, err
 	}
-	payload, err := oidc.ParseToken(decrypted, claims)
-	if err != nil {
+	payload,err:=v.KeySet().VerifySignature(ctx,decrypted)
+	if err!=nil{
+		return nil, err
+	}
+	err = json.Unmarshal(payload, claims)
+	if err!=nil{
 		return nil, err
 	}
 
@@ -62,9 +66,9 @@ func VerifyIDToken(ctx context.Context, token string, v IDTokenVerifier) (oidc.I
 		return nil, err
 	}
 
-	if err = oidc.CheckSignature(ctx, decrypted, payload, claims, v.SupportedSignAlgs(), v.KeySet()); err != nil {
-		return nil, err
-	}
+	//if err = oidc.CheckSignature(ctx, decrypted, payload, claims, v.SupportedSignAlgs(), v.KeySet()); err != nil {
+	//	return nil, err
+	//}
 
 	if err = oidc.CheckExpiration(claims, v.Offset()); err != nil {
 		return nil, err
