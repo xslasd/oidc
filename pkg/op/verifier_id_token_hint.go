@@ -90,6 +90,14 @@ func VerifyIDTokenHint(ctx context.Context, token string, v IDTokenHintVerifier)
 		fmt.Println("CheckIssuer",err)
 		return nil, err
 	}
+	if len(decrypted.Signatures) == 0 {
+		return  nil, oidc.ErrSignatureMissing
+	}
+	if len(decrypted.Signatures) > 1 {
+		return  nil, oidc.ErrSignatureMultiple
+	}
+	sig := decrypted.Signatures[0]
+	claims.SetSignatureAlgorithm(jose.SignatureAlgorithm(sig.Header.Algorithm))
 
 	//if err = oidc.CheckSignature(ctx, decrypted, payload, claims, v.SupportedSignAlgs(), v.KeySet()); err != nil {
 	//	fmt.Println("CheckSignature",err)

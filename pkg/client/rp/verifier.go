@@ -3,6 +3,7 @@ package rp
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"time"
 
 	"gopkg.in/square/go-jose.v2"
@@ -24,10 +25,12 @@ type IDTokenVerifier interface {
 //https://openid.net/specs/openid-connect-core-1_0.html#TokenResponseValidation
 func VerifyTokens(ctx context.Context, accessToken, idTokenString string, v IDTokenVerifier) (oidc.IDTokenClaims, error) {
 	idToken, err := VerifyIDToken(ctx, idTokenString, v)
+	fmt.Println("VerifyTokens====",err)
 	if err != nil {
 		return nil, err
 	}
 	if err := VerifyAccessToken(accessToken, idToken.GetAccessTokenHash(), idToken.GetSignatureAlgorithm()); err != nil {
+		fmt.Println("VerifyAccessToken====",err)
 		return nil, err
 	}
 	return idToken, nil
@@ -65,7 +68,15 @@ func VerifyIDToken(ctx context.Context, token string, v IDTokenVerifier) (oidc.I
 	if err = oidc.CheckAuthorizedParty(claims, v.ClientID()); err != nil {
 		return nil, err
 	}
-
+	if len(decrypted.Signatures) == 0 {
+		return  nil, oidc.ErrSignatureMissing
+	}
+	if len(decrypted.Signatures) > 1 {
+		return  nil, oidc.ErrSignatureMultiple
+	}
+	sig := decrypted.Signatures[0]
+	claims.SetSignatureAlgorithm(jose.SignatureAlgorithm(sig.Header.Algorithm))
+	//
 	//if err = oidc.CheckSignature(ctx, decrypted, payload, claims, v.SupportedSignAlgs(), v.KeySet()); err != nil {
 	//	return nil, err
 	//}

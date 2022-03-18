@@ -313,21 +313,17 @@ func CodeExchange(ctx context.Context, code string, rp RelyingParty, opts ...Cod
 	for _, opt := range opts {
 		codeOpts = append(codeOpts, opt()...)
 	}
-
 	token, err := rp.OAuthConfig().Exchange(ctx, code, codeOpts...)
 	if err != nil {
 		return nil, err
 	}
-
 	if rp.IsOAuth2Only() {
 		return &oidc.Tokens{Token: token}, nil
 	}
-
 	idTokenString, ok := token.Extra(idTokenKey).(string)
 	if !ok {
 		return nil, errors.New("id_token missing")
 	}
-
 	idToken, err := VerifyTokens(ctx, token.AccessToken, idTokenString, rp.IDTokenVerifier())
 	if err != nil {
 		return nil, err
