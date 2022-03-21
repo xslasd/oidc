@@ -17,15 +17,15 @@ import (
 )
 
 const (
-	healthEndpoint               = "/healthz"
-	readinessEndpoint            = "/ready"
-	defaultAuthorizationEndpoint = "authorize"
-	defaultTokenEndpoint         = "oauth/token"
-	defaultIntrospectEndpoint    = "oauth/introspect"
-	defaultUserinfoEndpoint      = "userinfo"
-	defaultRevocationEndpoint    = "revoke"
-	defaultEndSessionEndpoint    = "end_session"
-	defaultKeysEndpoint          = "keys"
+	healthEndpoint               = "/api/oidc/healthz"
+	readinessEndpoint            = "/api/oidc/ready"
+	defaultAuthorizationEndpoint = "/api/oidc/authorize"
+	defaultTokenEndpoint         = "/api/oidc/oauth/token"
+	defaultIntrospectEndpoint    = "/api/oidc/oauth/introspect"
+	defaultUserinfoEndpoint      = "/api/oidc/userinfo"
+	defaultRevocationEndpoint    = "/api/oidc/revoke"
+	defaultEndSessionEndpoint    = "/api/oidc/end_session"
+	defaultKeysEndpoint          = "/api/oidc/keys"
 )
 
 var (
