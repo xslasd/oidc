@@ -25,12 +25,12 @@ type IDTokenVerifier interface {
 //https://openid.net/specs/openid-connect-core-1_0.html#TokenResponseValidation
 func VerifyTokens(ctx context.Context, accessToken, idTokenString string, v IDTokenVerifier) (oidc.IDTokenClaims, error) {
 	idToken, err := VerifyIDToken(ctx, idTokenString, v)
-	fmt.Println("VerifyTokens====",err)
+	fmt.Println("VerifyTokens====", err)
 	if err != nil {
 		return nil, err
 	}
 	if err := VerifyAccessToken(accessToken, idToken.GetAccessTokenHash(), idToken.GetSignatureAlgorithm()); err != nil {
-		fmt.Println("VerifyAccessToken====",err)
+		fmt.Println("VerifyAccessToken====", err)
 		return nil, err
 	}
 	return idToken, nil
@@ -40,16 +40,16 @@ func VerifyTokens(ctx context.Context, accessToken, idTokenString string, v IDTo
 //https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation
 func VerifyIDToken(ctx context.Context, token string, v IDTokenVerifier) (oidc.IDTokenClaims, error) {
 	claims := oidc.EmptyIDTokenClaims()
-	decrypted, err :=jose.ParseSigned(token)
+	decrypted, err := jose.ParseSigned(token)
 	if err != nil {
 		return nil, err
 	}
-	payload,err:=v.KeySet().VerifySignature(ctx,decrypted)
-	if err!=nil{
+	payload, err := v.KeySet().VerifySignature(ctx, decrypted)
+	if err != nil {
 		return nil, err
 	}
 	err = json.Unmarshal(payload, claims)
-	if err!=nil{
+	if err != nil {
 		return nil, err
 	}
 
@@ -61,25 +61,21 @@ func VerifyIDToken(ctx context.Context, token string, v IDTokenVerifier) (oidc.I
 		return nil, err
 	}
 
-	if err = oidc.CheckAudience(claims, v.ClientID()); err != nil {
-		return nil, err
-	}
+	//if err = oidc.CheckAudience(claims, v.ClientID()); err != nil {
+	//	return nil, err
+	//}
+	//if err = oidc.CheckAuthorizedParty(claims, v.ClientID()); err != nil {
+	//	return nil, err
+	//}
 
-	if err = oidc.CheckAuthorizedParty(claims, v.ClientID()); err != nil {
-		return nil, err
-	}
 	if len(decrypted.Signatures) == 0 {
-		return  nil, oidc.ErrSignatureMissing
+		return nil, oidc.ErrSignatureMissing
 	}
 	if len(decrypted.Signatures) > 1 {
-		return  nil, oidc.ErrSignatureMultiple
+		return nil, oidc.ErrSignatureMultiple
 	}
 	sig := decrypted.Signatures[0]
 	claims.SetSignatureAlgorithm(jose.SignatureAlgorithm(sig.Header.Algorithm))
-	//
-	//if err = oidc.CheckSignature(ctx, decrypted, payload, claims, v.SupportedSignAlgs(), v.KeySet()); err != nil {
-	//	return nil, err
-	//}
 
 	if err = oidc.CheckExpiration(claims, v.Offset()); err != nil {
 		return nil, err
