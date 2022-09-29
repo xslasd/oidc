@@ -69,6 +69,7 @@ type AuthRequest struct {
 
 	State string `json:"state" schema:"state"`
 	Nonce string `json:"nonce" schema:"nonce"`
+	Pi    string `json:"pi" schema:"pi"`
 
 	ResponseMode ResponseMode        `json:"response_mode" schema:"response_mode"`
 	Display      Display             `json:"display" schema:"display"`

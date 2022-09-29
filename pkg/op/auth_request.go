@@ -101,7 +101,7 @@ func Authorize(w http.ResponseWriter, r *http.Request, authorizer Authorizer) {
 		AuthRequestError(w, r, req, oidc.DefaultToServerError(err, "unable to retrieve client by id"), authorizer.Encoder())
 		return
 	}
-	RedirectToLogin(req.GetID(), req.GetState(), client, w, r)
+	RedirectToLogin(req.GetID(), authReq.Pi, client, w, r)
 }
 
 //ParseAuthorizeRequest parsed the http request into an oidc.AuthRequest
