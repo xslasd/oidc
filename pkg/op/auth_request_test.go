@@ -676,6 +676,7 @@ func TestValidateAuthReqResponseType(t *testing.T) {
 func TestRedirectToLogin(t *testing.T) {
 	type args struct {
 		authReqID string
+		state     string
 		client    op.Client
 		w         http.ResponseWriter
 		r         *http.Request
@@ -688,6 +689,7 @@ func TestRedirectToLogin(t *testing.T) {
 			"redirect ok",
 			args{
 				"id",
+				"state",
 				mock.NewClientExpectAny(t, op.ApplicationTypeNative),
 				httptest.NewRecorder(),
 				httptest.NewRequest("GET", "/authorize", nil),
@@ -696,7 +698,7 @@ func TestRedirectToLogin(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			op.RedirectToLogin(tt.args.authReqID, tt.args.client, tt.args.w, tt.args.r)
+			op.RedirectToLogin(tt.args.authReqID, tt.args.state, tt.args.client, tt.args.w, tt.args.r)
 			rec := tt.args.w.(*httptest.ResponseRecorder)
 			require.Equal(t, http.StatusFound, rec.Code)
 			require.Equal(t, "/login?id=id", rec.Header().Get("location"))

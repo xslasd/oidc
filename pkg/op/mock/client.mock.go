@@ -8,9 +8,9 @@ import (
 	reflect "reflect"
 	time "time"
 
+	gomock "github.com/golang/mock/gomock"
 	oidc "github.com/xslasd/oidc/pkg/oidc"
 	op "github.com/xslasd/oidc/pkg/op"
-	gomock "github.com/golang/mock/gomock"
 )
 
 // MockClient is a mock of Client interface.
@@ -177,7 +177,7 @@ func (mr *MockClientMockRecorder) IsScopeAllowed(arg0 interface{}) *gomock.Call 
 }
 
 // LoginURL mocks base method.
-func (m *MockClient) LoginURL(arg0 string) string {
+func (m *MockClient) LoginURL(arg0, arg1 string) string {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "LoginURL", arg0)
 	ret0, _ := ret[0].(string)

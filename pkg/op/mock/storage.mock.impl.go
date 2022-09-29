@@ -123,7 +123,7 @@ func (c *ConfClient) PostLogoutRedirectURIs() []string {
 	return []string{}
 }
 
-func (c *ConfClient) LoginURL(id string) string {
+func (c *ConfClient) LoginURL(id, state string) string {
 	return "login?id=" + id
 }
 
