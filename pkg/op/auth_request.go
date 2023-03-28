@@ -101,7 +101,9 @@ func Authorize(w http.ResponseWriter, r *http.Request, authorizer Authorizer) {
 		AuthRequestError(w, r, req, oidc.DefaultToServerError(err, "unable to retrieve client by id"), authorizer.Encoder())
 		return
 	}
-	RedirectToLogin(req.GetID(), authReq.Pi, client, w, r)
+
+	login := client.LoginURL(req, authReq.Pi)
+	http.Redirect(w, r, login, http.StatusFound)
 }
 
 //ParseAuthorizeRequest parsed the http request into an oidc.AuthRequest
@@ -366,12 +368,6 @@ func ValidateAuthReqIDTokenHint(ctx context.Context, idTokenHint string, verifie
 			"If you have any questions, you may contact the administrator of the application.")
 	}
 	return claims.GetSubject(), nil
-}
-
-//RedirectToLogin redirects the end user to the Login UI for authentication
-func RedirectToLogin(authReqID, state string, client Client, w http.ResponseWriter, r *http.Request) {
-	login := client.LoginURL(authReqID, state)
-	http.Redirect(w, r, login, http.StatusFound)
 }
 
 //AuthorizeCallback handles the callback after authentication in the Login UI

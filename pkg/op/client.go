@@ -31,7 +31,7 @@ type Client interface {
 	AuthMethod() oidc.AuthMethod
 	ResponseTypes() []oidc.ResponseType
 	GrantTypes() []oidc.GrantType
-	LoginURL(id string, state string) string
+	LoginURL(req AuthRequest, state string) string
 	AccessTokenType() AccessTokenType
 	IDTokenLifetime() time.Duration
 	DevMode() bool
