@@ -10,7 +10,7 @@ require (
 	github.com/gorilla/handlers v1.5.1
 	github.com/gorilla/mux v1.8.0
 	github.com/gorilla/schema v1.2.0
-	github.com/gorilla/securecookie v1.1.1
+	github.com/gorilla/securecookie v1.1.2
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/stretchr/testify v1.7.0
 	golang.org/x/oauth2 v0.0.0-20200902213428-5d25da1a8d43
